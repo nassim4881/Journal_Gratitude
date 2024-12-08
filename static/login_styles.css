@@ -1,0 +1,183 @@
+/* Global */
+body {
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #333;
+    background: linear-gradient(120deg, #6a11cb, #2575fc, #ff6b6b);
+    background-size: 300% 300%;
+    animation: backgroundMove 10s infinite;
+    transition: background 0.5s ease, color 0.5s ease;
+
+    /* Centrage parfait */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden; /* Empêche le défilement si le contenu dépasse */
+}
+
+/* Animation pour le fond */
+@keyframes backgroundMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Mode sombre */
+body.dark-mode {
+    background: linear-gradient(120deg, #121212, #1f1f1f);
+    color: #ffffff;
+}
+
+/* Conteneur principal */
+.login-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+    transition: background 0.5s ease, box-shadow 0.5s ease;
+}
+
+body.dark-mode .login-container {
+    background: rgba(18, 18, 18, 0.9);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Titre principal */
+.login-title {
+    font-size: 2.5rem;
+    color: #6a11cb;
+    margin-bottom: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+body.dark-mode .login-title {
+    color: #ff9f43;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Champ de saisie */
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #6a11cb;
+    transition: color 0.5s ease;
+}
+
+body.dark-mode .input-icon {
+    color: #ff9f43;
+}
+
+input[type="text"] {
+    /* Ajustement pour éviter les dépassements */
+    width: 90%;
+    padding: 10px 15px 10px 35px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 8px rgba(106, 17, 203, 0.5);
+}
+
+body.dark-mode input[type="text"] {
+    background: #1f1f1f;
+    border-color: #444;
+    color: #fff;
+}
+
+/* Boutons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(106, 17, 203, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(106, 17, 203, 0.5);
+}
+
+body.dark-mode .btn {
+    background: linear-gradient(135deg, #ff9f43, #ff6b6b);
+    color: #fff;
+}
+
+/* Animation sur clic */
+.btn:active {
+    transform: scale(0.95);
+}
+
+/* Bouton mode sombre/clair */
+.btn-mode {
+    margin-top: 20px;
+    background: #ff9f43;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 15px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.btn-mode:hover {
+    background: #e67e22;
+}
+
+body.dark-mode .btn-mode {
+    background: #3498db;
+    color: white;
+}
+
+/* Transition entre mode clair/sombre */
+body.dark-mode .login-container {
+    transition: all 0.5s ease;
+}
+
+/* Animation pour l'apparition du champ mot de passe */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

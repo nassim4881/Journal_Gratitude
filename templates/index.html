@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journal de Gratitude</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1 class="main-title">🌟 Journal de Gratitude</h1>
+            <div class="auth-buttons">
+                {% if current_user.is_authenticated %}
+                    <p class="user-info">Connecté en tant que : <span class="user-name">{{ current_user.id.upper() }}</span></p>
+                    <a href="/logout" class="btn btn-logout">🚪 Déconnexion</a>
+                {% else %}
+                    <a href="/login" class="btn btn-login">🔑 Connexion</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Message de confirmation dynamique -->
+        {% if success_message %}
+        <div id="success-message" class="alert">
+            {{ success_message }}
+        </div>
+        {% endif %}
+
+        <!-- Message de motivation -->
+        {% if message %}
+        <div id="motivation-message" class="alert alert-motivation">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        <!-- Statistiques générales -->
+        <div class="statistics-container">
+            <h2 class="stats-title">📊 Statistiques Générales</h2>
+            <div class="stats-box">
+                <p class="stat positive">😊 Positives : <span>{{ positive_count }}</span></p>
+                <p class="stat neutral">😐 Neutres : <span>{{ neutral_count }}</span></p>
+                <p class="stat negative">😞 Négatives : <span>{{ negative_count }}</span></p>
+            </div>
+        </div>
+
+        <!-- Bouton pour ajouter une entrée -->
+        <div class="action-container">
+            <a href="/add-entry" class="btn btn-add">➕ Ajouter une nouvelle entrée</a>
+        </div>
+
+        <!-- Tableau des entrées -->
+        <section class="entries-section">
+            <table class="entries-table">
+                <thead>
+                    <tr>
+                        <th>Texte 📝</th>
+                        <th>Sentiment 😊😐😞</th>
+                        <th>Score Positif ✅</th>
+                        <th>Score Neutre 😐</th>
+                        <th>Score Négatif ❌</th>
+                        <th>Actions ⚙️</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entry in entries %}
+                    <tr>
+                        <td>{{ entry.Text }}</td>
+                        <td>
+                            {% if entry.Sentiment == 'positive' %}
+                                😊 Positif
+                            {% elif entry.Sentiment == 'neutral' %}
+                                😐 Neutre
+                            {% else %}
+                                😞 Négatif
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="progress-bar positive" style="--positive-score: {{ entry.PositiveScore * 100 }}%;">
+                                <span></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="progress-bar neutral" style="--neutral-score: {{ entry.NeutralScore * 100 }}%;">
+                                <span></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="progress-bar negative" style="--negative-score: {{ entry.NegativeScore * 100 }}%;">
+                                <span></span>
+                            </div>
+                        </td>
+                        <td>
+                            {% if entry.UserID == current_user_id or current_user.id.lower() == 'admin' %}
+                                <a href="/edit-entry/{{ entry.RowKey }}" class="btn btn-edit">✏️ Modifier</a>
+                                <a href="/delete-entry/{{ entry.RowKey }}" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr ?');">🗑️ Supprimer</a>
+                            {% else %}
+                                <span class="not-allowed">🔒 Non autorisé</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Journal de Gratitude</p>
+    </footer>
+
+    <script>
+        // Suppression automatique des messages de confirmation après 5 secondes
+        setTimeout(() => {
+            const successMessage = document.getElementById('success-message');
+            if (successMessage) successMessage.style.display = 'none';
+        }, 5000);
+
+        // Suppression automatique des messages de motivation après 10 secondes
+        setTimeout(() => {
+            const motivationMessage = document.getElementById('motivation-message');
+            if (motivationMessage) motivationMessage.style.display = 'none';
+        }, 10000);
+    </script>
+</body>
+</html>

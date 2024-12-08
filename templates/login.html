@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Journal de Gratitude</title>
+    <link rel="stylesheet" href="/static/login_styles.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <h1 class="login-title">Bienvenue 👋</h1>
+        <p class="login-subtitle">Connectez-vous pour continuer votre voyage de gratitude</p>
+        
+        <form action="/login" method="POST" class="login-form">
+            <div class="input-group">
+                <span class="input-icon">👤</span>
+                <input type="text" name="email" id="email" placeholder="Entrez votre pseudo pour continuer" required oninput="togglePasswordField()">
+            </div>
+
+            <!-- Champ mot de passe, initialement caché -->
+            <div class="input-group" id="password-field" style="display: none;">
+                <span class="input-icon">🗝️</span>
+                <input type="password" name="password" id="password" placeholder="Entrez votre mot de passe..." autocomplete="off">
+            </div>
+
+            <button type="submit" class="btn btn-login">🔒 Se connecter</button>
+        </form>
+        
+        <div class="mode-switcher">
+            <button id="toggle-dark-mode" class="btn btn-mode">☀️ Mode clair</button>
+        </div>
+    </div>
+
+    <script>
+        // Mode sombre / clair
+        const toggleButton = document.getElementById('toggle-dark-mode');
+        toggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            toggleButton.textContent = document.body.classList.contains('dark-mode') ? '☀️ Mode clair' : '🌙 Mode sombre';
+        });
+
+        // Fonction pour afficher ou masquer le champ mot de passe
+        function togglePasswordField() {
+            const passwordField = document.getElementById('password-field');
+            const emailInput = document.getElementById('email').value;
+
+            if (emailInput.toLowerCase() === 'admin') {
+                passwordField.style.display = 'block';  // Afficher le champ mot de passe
+                passwordField.classList.add('fade-in'); // Animation pour afficher le champ de manière fluide
+            } else {
+                passwordField.style.display = 'none';  // Masquer le champ mot de passe
+                passwordField.classList.remove('fade-in'); // Retirer l'animation
+            }
+        }
+    </script>
+</body>
+</html>

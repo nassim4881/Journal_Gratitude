@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier votre pensée</title>
+    <link rel="stylesheet" href="/static/edit_entry_styles.css">
+</head>
+<body>
+    <div class="page-container">
+        <h1 class="main-title">✏️ Modifier votre pensée</h1>
+        <p class="subtitle">"Prenez un moment pour affiner vos réflexions."</p>
+
+        <!-- Message de confirmation si présent -->
+        {% if success_message %}
+        <div class="message">{{ success_message }}</div>
+        {% endif %}
+
+        <form method="POST" action="/submit-edit/{{ entry.RowKey }}" class="edit-entry-container">
+            <textarea name="text" placeholder="Modifiez votre pensée pour refléter votre gratitude..." required>{{ entry.Text }}</textarea>
+            <button type="submit" class="btn-save">💾 Enregistrer</button>
+        </form>
+
+        <a href="/" class="btn-back">Retour</a>
+    </div>
+</body>
+</html>

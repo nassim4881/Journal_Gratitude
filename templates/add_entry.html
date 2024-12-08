@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une Nouvelle Entrée</title>
+    <link rel="stylesheet" href="/static/add_entry_styles.css">
+</head>
+<body>
+    <div class="page-container">
+        <!-- Titre principal -->
+        <header>
+            <h1 class="main-title">🌟 Exprimez votre gratitude 🌈</h1>
+            <p class="subtitle">"Vos pensées méritent d’être entendues"</p>
+        </header>
+
+        <!-- Formulaire principal -->
+        <main>
+            <div class="add-entry-container">
+                <!-- Formulaire -->
+                <form action="/submit-entry" method="POST">
+                    <div class="input-group">
+                        <textarea name="text" id="text" placeholder="Écrivez ici votre pensée avec gratitude et positivité..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-add">➕ Ajouter</button>
+                </form>
+
+                <!-- Message de confirmation -->
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for message in messages %}
+                            <p class="flash-message">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <!-- Suggestions rapides -->
+            <div class="suggestions-container">
+                <h2 class="suggestions-title">Besoin d’inspiration ?</h2>
+                <div class="suggestions">
+                    <button class="suggestion">Je suis reconnaissant pour ma famille</button>
+                    <button class="suggestion">Je suis heureux d’avoir du temps pour moi</button>
+                    <button class="suggestion">Je suis fier(e) de mes progrès</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Bouton Retour -->
+        <footer>
+            <a href="/" class="btn btn-back">⬅️ Retour</a>
+        </footer>
+    </div>
+
+    <script>
+        // Animation et validation du champ
+        const form = document.querySelector('form');
+        const textArea = document.getElementById('text');
+        const suggestions = document.querySelectorAll('.suggestion');
+
+        form.addEventListener('submit', () => {
+            // Ajout de feedback visuel
+            const addButton = document.querySelector('.btn-add');
+            addButton.textContent = "✔️ Ajouté !";
+            addButton.style.backgroundColor = "#27ae60";
+            setTimeout(() => {
+                addButton.textContent = "➕ Ajouter";
+                addButton.style.backgroundColor = "";
+            }, 2000);
+        });
+
+        // Ajout d'une suggestion rapide
+        suggestions.forEach(button => {
+            button.addEventListener('click', () => {
+                textArea.value = button.textContent;
+            });
+        });
+    </script>
+</body>
+</html>
